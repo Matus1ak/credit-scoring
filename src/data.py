@@ -24,6 +24,10 @@ def load_and_clean(file_path):
     # 6.74%, so the absence is flagged before it is imputed with 0.
     df["dependents_missing"] = (df["NumberOfDependents"].isna()).astype(int)
     df["NumberOfDependents"] = df["NumberOfDependents"].fillna(0)
+    
+    # Above 5 dependents the group sizes fall below a hundred records and the
+    # default rate becomes erratic, so the upper values are collapsed into one.
+    df["NumberOfDependents"] = df["NumberOfDependents"].clip(upper=5)
 
 
     # Where income is missing, DebtRatio holds a debt amount rather than a
@@ -31,5 +35,11 @@ def load_and_clean(file_path):
     df["income_missing"] = (df["MonthlyIncome"].isna()).astype(int)
     df["debt_amount"] = df["DebtRatio"].where(df["MonthlyIncome"].isna())
     df["DebtRatio"] = df["DebtRatio"].mask(df["MonthlyIncome"].isna())
+
+    # 241 records exceed 10, with a default rate close to the baseline, so the
+    # values are capped rather than flagged or removed.
+    df["RevolvingUtilizationOfUnsecuredLines"] = df["RevolvingUtilizationOfUnsecuredLines"].clip(upper=10)
+
+    
 
     return df
