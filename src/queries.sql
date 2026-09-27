@@ -11,7 +11,7 @@ INSERT INTO age_bands (label, min_age, max_age) VALUES
     ('36-45', 36, 45),
     ('46-55', 46, 55),
     ('56-65', 56, 65),
-    ('66-110', 66, 110);
+    ('66+', 66, 110);
 
 -- Dataset size and overall default rate (class imbalance check)
 SELECT 
