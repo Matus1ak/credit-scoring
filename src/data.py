@@ -35,8 +35,8 @@ def load_and_clean(file_path):
     df["NumberOfDependents"] = df["NumberOfDependents"].fillna(0)
 
 
-    # Above 5 dependents the group sizes fall below a hundred records and the
-    # default rate becomes erratic, so the upper values are collapsed into one.
+    # Above 5 dependents the groups thin out fast and the default rate
+    # becomes erratic, so the upper values are collapsed into one.
     df["NumberOfDependents"] = df["NumberOfDependents"].clip(upper=5)
 
 
