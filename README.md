@@ -1,5 +1,3 @@
-
-
 # Credit scoring on the "Give Me Some Credit" dataset
 
 A logistic regression model predicting whether a borrower will fall 90 or
@@ -22,9 +20,7 @@ code.
 
 The pipeline is split into modules by whether an operation can see the
 whole dataset or only the training split, which is what keeps test
-information out of the model. Missing values are flagged before they are
-imputed, because in three separate columns the absence itself predicted
-default. The resulting model is deliberately simple, since in credit
+information out of the model. Missing values are flagged before they are imputed, because in two columns the absence itself predicted default, and in a third a status code disguised as a count turned out to be the strongest predictor of all. The resulting model is deliberately simple, since in credit
 scoring a coefficient that can be explained to a regulator is worth more
 than a few points of accuracy.
 
@@ -87,7 +83,7 @@ older banking systems of reserving high two-digit codes for account
 statuses such as "in collections" or "charged off".
 
 The obvious fix is to delete them, at 0.18% of the data nobody would
-notice. Their default rate is **54.6%**, against 6.68% for everyone else.
+notice. Their default rate is **54.6%**, against a baseline of 6.68%.
 They are the single riskiest group in the dataset, and deleting them
 would have removed the strongest signal available. Instead the codes are
 replaced with 0 and a binary `sentinel_code` flag marks the affected rows.
